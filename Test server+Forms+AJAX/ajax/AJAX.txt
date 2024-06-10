@@ -1,0 +1,567 @@
+                                Введение в AJAX
+
+Технология AJAX представляет собой способ обновления части страницы без ее полной 
+перезагрузки. В основе технологии лежит JavaScript, протокол HTTP, 
+и некоторая серверная часть, например, PHP, NodeJS, либо какая-то иная.
+
+В настоящее время работа с AJAX реализуется через fetch. 
+
+Для изучения работы AJAX необходимо наличие сервера.
+ Мы будем использовать наш учебный сервер. Сделаем в папке с сервером HTML файл, 
+ который мы будем открывать в браузере:
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<script src="client.js" defer></script>
+	</head>
+	<body>
+		
+	</body>
+</html>
+
+Подключим к нему JavaScript файл:
+alert('test');
+
+
+
+
+                                Основы работы с fetch в AJAX
+
+Чтобы подгрузить часть страницы с помощью AJAX.
+ Пусть на нашей странице index.html будет расположен див и кнопка
+ (здесь показано содержимое body):
+<div></div>
+<button>click me</button>
+
+Пусть у нас также есть страница ajax.html, на которой расположены 
+три абзаца (без тегов страницы, просто абзацы):
+<p>1</p>
+<p>2</p>
+<p>3</p>
+
+Давайте сделаем так, чтобы по клику кнопку на
+ странице index.html в див подгрузилось содержимое страницы ajax.html.
+
+Для этого для начала получим в переменные ссылки на наши элементы:
+let div    = document.querySelector('div');
+let button = document.querySelector('button');
+
+Давайте навесим на кнопку обработчик клика:
+button.addEventListener('click', function() {
+	// тут будем выполнять AJAX запрос
+});
+
+Давайте теперь выполним AJAX запрос. Для этого используется функция fetch, параметром получающая адрес страницы, содержимое которой мы хотим получить. Укажем адрес страницы ajax.html на нашем сервере:
+button.addEventListener('click', function() {
+	let result = fetch('/ajax.html'); 
+});
+
+Своим результатом fetch вернет промис. Дело в том, что запрос страницы через AJAX - это асинхронная операция, ведь пройдет некоторое время, через которое страница нам ответит.
+
+Давайте получим результат промиса:
+button.addEventListener('click', function() {
+	let promise = fetch('/ajax.html'); 
+	
+	promise.then(function(response) {
+		// ответ сервера лежит в переменной 
+			response 
+	});
+});
+
+Упростим, избавившись от лишней переменной:
+button.addEventListener('click', function() {
+	fetch('/ajax.html').then(function(response) {
+		
+	});
+});
+
+Упростим, воспользовавшись стрелочной функцией:
+button.addEventListener('click', function() {
+	fetch('/ajax.html').then(response => {
+		
+	});
+});
+
+Представим в более читаемом виде:
+button.addEventListener('click', function() {
+	fetch('/ajax.html').then(
+		response => {
+			
+		}
+	);
+});
+
+В переменной response содержится достаточно сложный объект 
+класса Response:
+button.addEventListener('click', function() {
+	fetch('/ajax.html').then(response => {
+		console.log(response); // объект 
+			класса Response 
+	});
+});
+
+Глубоко этот объект мы будем изучать в следующих уроках, 
+а пока нам нужно самое простое - получить текст запрошенной страницы. 
+Для этого в этом объекте существует метод text. Этот метод, однако, 
+возвращает не текст страницы, а промис с ее текстом:
+button.addEventListener('click', function() {
+	fetch('/ajax.html').then(
+		response => {
+			console.log(response.text()); // выведет 
+				Promise 
+		}
+	);
+});
+
+Чтобы добраться до текста страницы, необходимо промис, 
+полученный из response.text, обработать еще раз:
+button.addEventListener('click', function() {
+	fetch('/ajax.html').then(
+		response => {
+			return response.text();
+		}
+	).then(
+		text => {
+			console.log(text); // текст 
+				страницы 
+		}
+	);
+});
+
+Итак, мы наконец получили текст запрошенной страницы и можем, 
+например, записать его в наш див:
+button.addEventListener('click', function() {
+	fetch('/ajax.html').then(
+		response => {
+			return response.text();
+		}
+	).then(
+		text => {
+			div.innerHTML = text;
+		}
+	);
+});
+
+
+
+
+			Код HTTP ответа в AJAX запросе в JavaScript
+
+В свойстве status ответа response содержится код HTTP ответа:
+button.addEventListener('click', function() {
+	fetch('/ajax.html').then(response => {
+		console.log(response.status); // например, 
+			200 
+	});
+});
+
+				Успешность AJAX запроса в JavaScript
+
+В свойстве ok содержится true, если сервер ответил с HTTP статусом из группы 2xx, и false, если из другой группы:
+button.addEventListener('click', function() {
+	fetch('/ajax.html').then(response => {
+		console.log(response.ok); // выведет 
+			true или false 
+	});
+});
+
+					Исключительные ситуации при AJAX запросах в JavaScript
+
+Если при выполнении AJAX запроса случится исключительная ситуация 
+(например, оборвется интернет), то промис завеширшится с ошибкой. 
+Мы сможем поймать эту ошибку удобным нам способом, например, через catch:
+button.addEventListener('click', function() {
+	let promise = fetch('/ajax.html')
+	.then(
+		response => {
+			return response.text();
+		},
+	).then(
+		text => {
+			console.log(text);
+		}
+	).catch(
+		error => {
+			alert(error);
+		}
+	);
+});
+
+
+
+
+				Полный перехват AJAX ошибок в JavaScript
+
+Промис, который возвращает fetch, завершается с ошибкой,
+ только если произошла ошибка сети. Если же сервер вернул ответ со статусом 
+ 404 или 500, то промис будет завершен успешно, но при этом статус ok будет 
+ установлен в false.
+
+Давайте перехватим оба типа ошибок:
+button.addEventListener('click', function() {
+	let promise = fetch('/ajax.html')
+	.then(
+		response => {
+			if (response.ok) {
+				return response.text();
+			} else {
+				console.log('плохой статус ответа');
+				return '';
+			}
+		},
+	).then(
+		text => {
+			console.log(text);
+		}
+	).catch(
+		error => {
+			console.log(error);
+		}
+	);
+});
+
+Сделаем так, чтобы ошибка, связанная с плохим статусом HTTP ответа,
+также ловилась блоком catch. Для этого прокинем ее дальше через throw:
+button.addEventListener('click', function() {
+	let promise = fetch('/ajax.html')
+	.then(
+		response => {
+			if (response.ok) {
+				return response.text();
+			} else {
+				throw new Error('плохой статус ответа');
+			}
+		},
+	).then(
+		text => {
+			console.log(text);
+		}
+	).catch(
+		error => {
+			console.log(error);
+		}
+	);
+});
+
+
+				Заголовки HTTP ответа в AJAX в JavaScript
+
+Заголовки ответа хранятся в свойстве headers объекта response. 
+Давайте получим какой-нибудь заголовок:
+button.addEventListener('click', function() {
+	fetch('/ajax.html').then(response => {
+		console.log(response.headers.get('Content-Type'));
+	});
+});
+
+А теперь переберем все заголовки циклом:
+button.addEventListener('click', function() {
+	fetch('/ajax.html').then(response => {
+		for (let [key, value] of response.headers) {
+			console.log(key, value);
+		}
+	});
+});
+
+П				олучение JSON через AJAX в JavaScript
+
+Распространенной практикой является отдача сервером данных в формате JSON. 
+На сервере есть следующий файл:
+{
+	"num1": "1",
+	"num2": "2"
+}
+
+Получим данные из этого файла:
+button.addEventListener('click', function() {
+	fetch('/data.json').then(response => {
+		return response.text();
+	}).then(data => {
+		console.log(JSON.parse(data));
+	});
+});
+
+Можно воспользоваться методом json, чтобы JSON автоматически преобразовался
+ в структуру JavaScript:
+button.addEventListener('click', function() {
+	fetch('/data.json').then(response => {
+		return response.json();
+	}).then(data => {
+		console.log(data);
+	});
+});
+
+
+
+			Заголовки HTTP запроса через AJAX в JavaScript
+
+С помощью настройки headers можно передавать HTTP заголовки запроса:
+button.addEventListener('click', function() {
+	let promise = fetch('/handler/', {
+		headers: {
+			name1: 'value1',
+			name2: 'value2',
+		}
+	});
+});
+
+
+				Отправка GET запросов через AJAX в JavaScript
+
+Чтобы передавать данные на сервер в AJAX запросе. 
+Сервер что-то будет делать с этими данными и отправлять нам обратно результат.
+
+Наш тестовый сервер будет обрабатывать данные, отправленные на адрес /handler/:
+button.addEventListener('click', function() {
+	let promise = fetch('/handler/');
+});
+
+Для начала давайте отправим GET запрос:
+button.addEventListener('click', function() {
+	let promise = fetch('/handler/?num=3');
+});
+
+Давайте получим отправленные данные на стороне сервера:
+export default {
+	'/handler/': function({get}) {
+		console.log(get.num); // выведет 3
+	}
+}
+
+Давайте что-нибудь сделаем с этими данными и отправим их обратно:
+export default {
+	'/handler/': function({get}) {
+		return get.num ** 2;
+	}
+}
+
+На стороне клиента получим результат и выведем его куда-нибудь:
+button.addEventListener('click', function() {
+	fetch('/handler/?num=3').then(
+		response => {
+			return response.text();
+		}
+	).then(
+		text => {
+			console.log(text);
+		}
+	);
+});
+
+
+				Отправка POST запросов через AJAX в JavaScript
+
+Давайте теперь отправим на сервер POST запрос. 
+Для этого у функции fetch есть второй параметр с настройками. 
+В настройке method указывается метод HTTP запроса. Укажем метод POST:
+
+button.addEventListener('click', function() {
+	let promise = fetch('/handler/', {
+		method: 'post',
+	});
+});
+
+Давайте также зададим данные, которые мы хотим отправить на сервер. 
+В POST запросах данные передаются в теле HTTP запроса. Для этого данные 
+нужно указать в настройке body. Укажем их в виде Query String, задав их тип 
+соответствующим MIME:
+button.addEventListener('click', function() {
+	let promise = fetch('/handler/', {
+		method: 'post',
+		body: 'num1=1&num2=2',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+		},
+	});
+});
+
+Получим эти данные на сервере, сделаем с ними что-нибудь и отправим их обратно:
+export default {
+	'/handler/': function({ post }) {
+		return Number(post.num1) + Number(post.num2);
+	}
+}
+
+
+		Отправка данных через AJAX с помощью URLSearchParams в JavaScript
+
+Часто не очень удобно формировать вручную Query String. 
+Более удобно это сделать через URLSearchParams:
+button.addEventListener('click', function() {
+	let searchParams = new URLSearchParams();
+	
+	searchParams.set('num1', '1');
+	searchParams.set('num2', '2');
+	
+	let promise = fetch('/handler/', {
+		method: 'post',
+		body: searchParams,
+	});
+});
+
+
+				Отправка данных через AJAX с помощью FormData в JavaScript
+
+Можно также отправлять данные на сервер с помощью FormData:
+let formData = new FormData();
+
+formData.set('num1', '1');
+formData.set('num2', '2');
+
+let promise = fetch('/handler/', {
+	method: 'POST',
+	body: formData,
+});
+
+
+			Отправка формы через AJAX с помощью FormData JavaScript
+
+С помощью FormData можно автоматически отправить все поля формы на сервер.
+Давайте посмотрим, как это делается.
+
+Пусть у нас есть следующая форма, в которой инпутам даны атрибуты name:
+<form action="" method="GET">
+	<input name="num1">
+	<input name="num2">
+	<input type="submit">
+</form>
+
+Давайте отправим эту форму через AJAX. 
+Для начала получим ссылку на форму в переменную:
+let form = document.querySelector('form');
+
+Теперь в теле запроса в качестве данных укажем объект FormData. 
+А самому объекту параметром передадим ссылку на форму:
+form.addEventListener('submit', function(event) {
+	let promise = fetch('/handler/', {
+		method: 'POST',
+		body: new FormData(this) // передаем 
+			ссылку на форму 
+	});
+	
+	event.preventDefault();
+});
+
+В результате на сервере мы сможем получить значения инпутов по 
+их именам из атрибутов name:
+export default {
+	'/handler/': function({post}) {
+		console.log(post.num1);
+		console.log(post.num2);
+		return 'form data received';
+	}
+}
+
+			Отправка JSON на сервер с помощью AJAX в JavaScript
+
+На сервер можно отправлять данные в виде JSON. Это делается следующим образом:
+button.addEventListener('click', function() {
+	let promise = fetch('/handler/', {
+		method: 'post',
+		body: JSON.stringify([1, 2, 3, 4, 5]),
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	});
+});
+
+На сервере тело запроса будет лежать в body:
+export default {
+	'/handler/': function({ body }) {
+		console.log(body);
+	}
+}
+
+Распакуем полученный сервером JSON:
+export default {
+	'/handler/': function({ body }) {
+		console.log(JSON.parse(body));
+	}
+}
+
+
+
+
+				Политика CORS в AJAX запросах в JavaScript
+
+Через AJAX нельзя просто так делать запросы к другим сайтам 
+(cross-origin requests). Такие запросы регулируются политикой CORS. 
+Вкратце, по этой политике сайт, на который вы направляете запрос, 
+должен согласиться на него ответить. Для этого он должен отдать соответствующие
+ HTTP заголовки.
+
+Давайте попробуем на практике. 
+Запустим два тестовых сервера на разных портах. 
+Первый на 3001, а второй на 3002. Давайте попробуем отправить AJAX запрос 
+со второго сайта на первый.
+
+Пусть первый сайт готов принимать следующие запросы:
+export default {
+	'/handler/': function({ body }) {
+		console.log(body);
+		return 'success';
+	}
+}
+
+Отправим со второго сайта запрос на первый:
+button.addEventListener('click', function() {
+	let promise = fetch('http://localhost:3001/handler/', {
+		method: 'post',
+		body: JSON.stringify([1, 2, 3, 4, 5]),
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	});
+});
+
+В результате запрос не выполнится, а в консоли браузера мы увидим ошибку, 
+связанную с политикой CORS.
+
+Чтобы запрос выполнился, первый сервер должен отдать специальные HTTP заголовки.
+ Давайте их укажем - и запрос со второго сайта начнет проходить на первый:
+export default {
+	'/handler/': function({ body }) {
+		resp.setHeader('Access-Control-Allow-Origin', '*');
+		resp.setHeader('Access-Control-Allow-Headers', '*');
+		
+		console.log(body);
+		return 'success';
+	}
+}
+
+
+				Передача куки в AJAX запросах в JavaScript
+
+По умолчанию куки не передаются в AJAX запросах. Это означает, что не будет 
+работать сессия сервера. Обычно передача кук нам все-таки нужна. 
+Ее можно включить настройкой credentials.
+
+Значение 'include' заставит передавать куки в AJAX запросе 
+(даже если запрос cross-origin):
+fetch('https://example.com', {
+	credentials: 'include'
+});
+
+Значение 'same-origin' также заставит передавать куки, но только на тот сайт, 
+на котором запускается скрипт:
+fetch('https://example.com', {
+	credentials: 'same-origin'
+});
+
+Значение 'omit' запрещает передавать куки:
+fetch('https://example.com', {
+	credentials: 'omit'
+});
+
+
+				Синхронный стиль fetch в JavaScript
+
+Можно также работать с fetch в синхронном стиле:
+button.addEventListener('click', async function()
+	 { 
+	let response = await fetch('/ajax.html');
+	let text = await response.text();
+	console.log(text);
+});

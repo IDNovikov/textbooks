@@ -1,0 +1,1556 @@
+﻿/*Подключение происходит по принципу доваления в HTML HEAD  
+<link rel="stylesheet" href="style.css"*/
+
+
+
+.chapter1 h1 {
+color: red;/*Цвет обозначаетсяя как color*/
+}
+
+.chapter1 h2 {
+color: rgb: 255, 170, 0;/*    rgb: 255, 255, 255 
+			      rgba:255, 255, 255 0.1  (a-opacity 0-1)
+			      #FF0000*/
+}
+
+
+h1 {
+letter-spacing: 5px;  /*- устанавливает интервал между буквами*/
+word-spacing: 13px;   /*- устанавливает интервал между словами*/
+text-transform: capitalize; /*- устанавливает регистр символов - Первый сивол заглавный
+		lowercase - все в нижний
+		uppercase -  все в верхний
+		none 	  - отмена*/
+font-variant: small-caps; /*Капитель или normal*/
+text-align-last: right; /* выравнивание последней строки текста 
+		center
+		left
+		justify
+		auto
+		start
+		end*/				
+}
+
+h1::selection {
+color: red;
+background-color: black;}
+
+
+h1::first-letter{   /*задает стиль первой букве
+  ::first-line - первая строка
+*/ 
+font: bold 30px Arial;
+color: red;
+}
+
+
+
+
+
+#chapter1 p {
+
+color: black;
+
+width: 300px;
+
+text-align: justify;
+
+font-weight: bold; /*ЖИрный текст font-weight;bold или normal*/
+
+font-style: italic; /*курсив*/
+
+opacity: 0.2 /*прозрачность*/ 
+
+font-size: 20px;/*размер шрифта*/
+
+font-family: Arial; /* Тип шрифта*/
+
+line-height: 40px; /*Междустрочный интервал, можно десятичной дробью 4.0*/
+/*при этом можно записать сокращенно ПОРЯДОК ОБЯЗАТЕЛЕН!!!! 
+
+font: bold italic 20px/50px arial    */
+
+text-indent: 20px; /*Красная строка*/
+
+/*text-decoration: overline; Верхнее overline или нижнее подчеркивание
+                            , перечеркивание line-through, а также убрать все 
+				эффекты (в т.ч.с ссылок)  none*/
+text-decoration-style: solid;
+text-decoration-color: orange;
+text-decoration-line: overline;/*
+text-shadow: 5px 5px 3px black;
+	   (сдвиг по х, сдвиг по у, размытие, цвет)
+box-shadow: 5px 5px 3px black;
+visible: visible
+	:hidden
+	: collapse (к таблицам)*/
+}
+
+
+
+
+.chapter1 td {
+width: 100px;/*ширина: widtg (Обычно обозначается в писелях)*/
+height: 50px; /*высота: height*/
+text-align: center;
+letter-spacing: 10px;
+}
+
+
+
+.chapter1 .red {
+color: red;
+width: 300px;
+text-align: left;}/*Выравнивание текста используется с text-align 
+			(можно выравнивать по left, right, center, и одновременно 
+			и по левому и по правому justify (по ширине)*/
+
+
+
+
+                               /*СЕЛЕКТОРЫ*/
+
+
+/*Каждый тег в зависимости от положения HTML может быть
+ родителем или потомком. Если применить свойство на родительский тег,
+то своийство применится и на потомка */
+/*  ul_li_i*/
+
+/* При необходимости применить свойство к нескольким тегам используют
+конструкцию:
+h2, h3, p {
+color: red;
+}
+*/
+
+
+/* Селектор потомков*/
+
+.chapter1 ul li {
+color:red;}
+
+.chapter1 ol li {
+color:green;}
+
+/* Дочерний селектор*/
+
+/* 
+.chapter1 p > i {
+color: red;}
+*/
+
+
+/* КЛАССЫ ЭЛЕМЕНТОВ */
+
+.chapter1 .eee {
+color: purple;
+}
+
+.chapter1 .zzz {
+color: green;
+}
+
+/*  Тег SPAN */ 
+
+#chapter1 .red {
+color: red;
+}
+
+/*  Тег DIV первый див не работает так-как его перекрывает тег <p>
+второй тег без Р работает....
+...почему??? */
+
+
+.block1 {
+color: brown;
+width: 100px;
+text-align: none;
+font-weight: none; 
+font-style: none; 
+font-size: 30px;
+font-family: Arial; 
+line-height: 50px;
+text-indent: none; 
+text-decoration: none;
+
+}
+
+.block2 {
+color: green;
+
+}
+
+/*Группировка классов*/
+.zzz, .eee {
+font-size: 15px;
+}
+
+
+/* Тег с классом
+
+p.eee {
+color: purple;} */
+
+/* Селекторы потомков и классы 
+
+.block h2 {
+color:green;
+}
+
+.block h2.header {
+font-size: 3;}*/
+
+
+/* Элемент с несколькими классами */
+
+/*<span class=:"error large"> Lorem ipsum </span>*/
+
+.error 
+{color: red;
+}
+
+.large
+{font-size: 30px;
+font-family: arial;}
+
+/* Выбор элемента по ID*/
+
+#FuckID
+{color: blue;}
+
+
+/*Группировка сложных селекторов
+Правильно: 
+.block #id h2, .sector #di h3
+{color: red: }
+Все что разделено запятой при группировке,
+должно представлять собой полноценный селектор*/
+
+/*Приоритет селекторов CSS:
+-При использовании двух равноценных селекторов применится селектор,
+который был использован ниже (при конфликте свойств, если свой свойтсва
+разные, то применятся оба свойства).
+1. Правило: всегда побеждает селектор тега p>.text
+2. Правило: идентификатор побеждает класс
+3. Правило: при равных условиях побеждает тот селектор у которого
+больше частей (победит у готорого тегов больше)
+4 Правило:
+-может быть такое, что один селектор ловит элемент, а второй селектор
+ловит родителя этого элемента. И если потомку задан задан цвет как и родителю
+то селектор потомка будет иметь больший приоритет
+<div class="block">
+<p> text </p>
+</div> 
+.block { color:red;}
+p {color: green;} ПОБЕДИТ ЭТОТ СЕЛЕКТОР*/
+
+
+
+/*Соседний селектор
+Соседний селектор + элемент сверху
+h2 + p {}
+
+/*Родственный селектор
+Позволяет выбрать все элементы, находящиеся после 
+заданного элемента внутри одного родителя
+
+<div>
+<p></p>
+<h2></h2>
+</div
+
+h2 ~ p
+{}
+
+
+/*Универсальный селектор
+ * - позволяет выбрать все элементы
+div * {} - повзоляет выбрать все элементы внутри ДИВ*/
+
+
+
+                           /*Состояние ссылок
+
+
+-позволяет приминить реагирование на ссылки (обычно реагируют 
+на наведение курсора)
+ a:hover - поймаем состояние наведения курсора
+           (:hover - является псевдоклассом)
+ a:link  - отлавливает непосещенную ссылку
+  :visited - отлавливает посещенную ссылку
+  :active - отлавливает на какой элемент нажали мышкой, но не отпустили*/
+
+.bb {
+color: black;
+font-size: 30px;}
+
+.bb:link
+{color: red}
+
+.bb:visited
+{color: green}
+
+.bb:hover 
+{text-decoration: none;}
+
+.bb:active
+{color: blue;}
+
+			      /*ВЫБОРКА по позиции*/
+			/* Псевдокласс First-child
+-выбирает элемент, который является первым потомком родителя
+
+<ol> 
+<li>.......</li>
+<li>.......</li>
+<li>.......</li>
+</ol>
+
+li:first-child {
+color:red;}
+*/
+
+			/*Псевдокласс last-child
+-выбирает последний родитель*/
+
+
+
+			/* Псевдокласс nth-child
+-выбирает элемент который является N-ым в списке
+
+li:ntn-child(число - последовательный номер элемента, начиная с 
+             Odd - нечетные элементы
+             even - четные элементы
+             выражение)*/
+
+
+			/*Псевдокласс nth-last-child
+-ну думаю понятно (тоже самое, но начиная с конца)*/
+
+			
+			/*Псевдокласс only-child
+-выбирает элемент, который является единственным потомком родителя*/
+
+			/*Псевдокласс empty
+-задает то, как будет выглядеть пустой элемент (не содержащий текста)
+
+
+<ol> 
+<li>.......</li>
+<li></li>
+<li>.......</li>
+</ol> */
+
+.empty li:empty {
+border: 1px solid black;
+list-style-type: circle;
+color: orange;
+width: 100px;}
+
+/* также можно просто спрятать
+
+.empty li:empty {
+display:none;}*/
+
+
+
+
+
+	            /*ВЫБОРКА по позиции и типу элементов*/
+			/* Псевдокласс First-of-type
+-выбирает элемент, который является первым потомком родителя ЗАДАННОГО
+ТИПА
+ :last-of-type
+ :nth-of-type
+ :nth-last-of-type
+ :only-of-type*/
+
+		   /*Селектор отрицания на CSS
+Псевдокласс :not
+-задает отрицание p:not(.last) - означает выбрать все абзацы,
+ у которых нет класса last "ВСЕ КРОМЕ"
+
+<ol> 
+<li>.......</li>
+<li></li>
+<li>.......</li>
+</ol> 
+
+li:not(:first-child){
+color:red;}
+				*/
+
+
+#FuckID {
+width: 300px;
+height: 100px;
+color: black;
+font-weight: bold;
+background-color: orange; /* цвет фона ДИВа*/
+}
+
+
+
+			/*Границы (выставь высоту и ширину) */
+
+
+#FuckID {
+border-width: 3px;
+border-style: solid;/* - сплошная линия
+	      double - двойная линия
+	      ridge - выпуклая линия
+              dashed - в виде тире
+              dotted - линия из точек*/
+
+border-color: black;
+text-align: center;
+border-radius: 10px;/*скругление углов (или 10%), можно скруглить и фон 
+(без цвета и ширины)*/
+}
+
+/* сокращение border: 1px solid red*/
+
+/* для создания одной границы border-left-right-top-bottom.
+Также можно скруглять border-radius по одиночным углам. 
+если написать border-radius: 10px 20px 30px 40 px будет 
+для левого верхнего, правого верхнего, правое нижнее, левое нижнее.*/
+
+
+			/*Работа с фоновыми картинками
+	background-image - задает фоновую картинку элементу. По умолчанию картинка 
+замостит своими копиями весь блок, однако можно изменить background-repeat.
+Другие свойства фона:
+background-position: top right
+		     top left
+		     bottom right
+                     bottom left
+		     20 px/% (from left border) 40px/% (from top border);
+
+	background-size:- задает размер картинки фона
+background-size: 400px 300 px
+               : auto (можно задавать по одной стороне)
+	       : cover (масштаб по блоку с сохранением пропорций с обрезкой)
+	       : contain (масштаб по блоку при занятии либо ширины либо высоты)
+
+	background-attachment: - задает каким образом прокручивать фоновую картинку
+картинку, вместе с текстом или текст будет скользить
+background-attachment: fixed (картинка неподвижна, текст скользит по ней)
+                     : scroll ( базовое значение, картинка прокручивается вместе)
+        	     : local (фон фиксируется с учетом поведения элемента
+			      еСЛИ ЭЛЕМЕНТ ИМЕЕТ ПРОКРУТКУ, ТО ФОН БУДЕТ
+			      ПРОКРУЧИВАТЬСЯ ВМЕСТЕ С СОДЕРЖИМЫМ, НО ФОН
+                              ВЫХОДЯЩИЙ ЗА РАМКИ ЭЛЕМЕНТА - СТАТИЧНЫЙ) 
+	
+	background-clip: - свойство задает как фоновая заливка будет размещаться 
+относительно элемента
+background-clip:border-box - фон залезает под границу
+               :padding-box - фон не будет залезать под границу
+               :content-box - фон будет только содержимым
+
+	background-origin: - свойство задает как фоновая заливка будет размещаться 
+относительно элемента
+background-origin: border-box - фоновая картинка залезает под границу
+                 : padding-box - фоновая картинка залезать под границу
+                 : content-box - фоновая картинка будет только содержимым
+
+	background - задает одновременно все свойства фона, при отсутствии свойства
+принимает значение по умолчанию  
+	
+	background: linear-gradient - задает линейный градиент, применяемый к 
+картинке фона в сочетании с background-image< background-size, background-image, 
+background-image-source
+
+linear-gradient:(угол ИЛИ! направление, цвет 1 размер 1, цвет 2 разиер 2)
+	направление: to top, to left, to bottom, to right (можно произвольно совмещать)
+	угол: 45deg
+	размер-протяженность цвета (градиент-дельта конца и начала цвета)
+
+background: linear-gradient (to top left (45deg), black 5px, red 10px)
+
+
+	background: radial-gradient - задает радиальный градиент
+radial-gradient (форма, тип, позиция, цвет 1, цвет 2, размер)
+		форма: ellipse(defolt)/circle
+		тип: closest-side - форма градиента совп с билжайшей ему стороной
+		     closest-corner - форма фычислится на основе ближ угла
+		     farthest-side - градиент распространяется по дальней 
+					стороне блока
+		     farthest-corner - форма градиента до дальнего угла блока
+		позиция: at top, at bottom, at left, at right
+
+	background: repeating-linear-gradient - задает повторяющийся линейный
+						 градиент
+                       (напрвление, цвет 1 размер 1, цвет 2 размер, ....)
+
+	background: repeating-radial-gradient - задает повторяющийся радиальный
+						 градиент
+                       (форма тип позиция, цвет 1 размер 1, цвет 2 размер, ....)
+
+	border-image: - свойство задает картинку для границы
+border-image: url (link) смещение/толщина/сдвиг/повторение
+			
+
+*/
+
+.block1 {
+width: 700px;
+heiht 300px;
+border: 3px solid black;
+background-image:
+URL (IMG.JPG);
+background-repeat: no-repeat;}
+
+
+				/* Работа с маркерами
+
+изменение маркеров ul 
+list-style-type: 
+ 		square
+		circle
+		disc
+		none*/
+
+ul {
+list-style-type: square;}
+
+/*изменение маркеров списка ol
+list-style-type: lower-roman (римские цифры)
+		 upper-roman (заглавные римские)
+		 lower-alpha
+		 apper-alpha (большие латинские буквы)
+		 lower-greek (греческ)
+		 decimal-leading-zero (нумерация числами с нулем в начале)*/
+
+ol {list-style-type:upper-roman;}
+
+
+
+			/* Работа с отступами
+				 margin*/
+
+/*margin - задает отступы между элементами сайта измеряется в px
+для создания отступов от разных сторон сухествует:
+						margin-left
+						margin-right
+						margin-top
+						margin-bottom
+при 4  свойствах (top, right, bottom, left)
+при 2  свойствах (одновременно top, bottom и одновремнно right, left)
+при 3  свойствах (top, одновремнно right и left, bottom)*/
+
+
+#one {
+height: 100px;
+width: 300px;
+border: 1px solid green;
+}
+
+#two
+{
+height: 100px;
+width: 300px;
+border: 1px solid red;
+margin-left: 30px;
+margin-top: 30px;}
+
+
+				/*PADDING
+
+padding делает отступ внутрь от границы
+одиночные свойства как и с margin (top, right, bottom, left)*/
+
+
+
+#elem {
+margin-top:50px;
+padding: 30px;
+line-height: 50px;
+width: 500px;
+border: 1px solid red;
+text-align: justify;}
+
+
+*/ПРИМечание: если задать элементу ширину в 100рх, то это не означает
+ что элемент будет такой ширины при padding. Дело в том, что 
+он расширяет элемент.
+Для того, что бы избежать это свойство используют: BOX-SIZING c значением
+
+BOX SIZING: BORDER-BOX
+
+				Свойства блочных
+				   элементов
+1. Блояному элементу можно задать ширину и высоту
+2. Если у блока не задана ширина, то он занимает всю ширину
+3. Если у блока не задана высота, то она формируется содержимым
+4. Если содержимого нет, то высота равна 0
+5. Если расположить несколько блоков рядом, то каждый будет начинаться
+с новой строки
+
+				Свойства строчных
+				   элементов
+-Ширина и высота строчного элемента всегда ограничены текстом width и height 
+не работают
+-Если несколько строчных элементов расположить рядом, то они выстраются в ряд
+, 
+
+				
+
+					Display
+-свойство которое меняет с блочной модели на строчную и обратно
+display:block
+display:inline*/
+
+
+#spanone, #spantwo, #spanthree {
+display: block;
+width: 100px;
+height: 100px;
+border: 1px solid red;
+margin-bottom: 20px;}
+
+
+
+
+			/*Выравнивание блочных элементов
+
+используется свойство margin, так для центрирования необходимо задавать в 
+значении auto 
+для автоматического левого отступа используется margin-left:auto  */
+/*
+#parent {
+border: 1px solid red;}
+
+#child {
+height: 100px;
+width: 500px;
+border: 1px solid green;
+margin-left: auto;}
+
+
+#child2 {
+height: 100px;
+width: 525px;
+border: 1px solid green;
+margin: 120px 5px auto;}
+
+#child3 {
+height: 100px;
+width: 700px;
+border: 1px solid green;
+margin-top: 120px;}*/
+
+			  /*Выравнивание строчных элементов
+
+используется свойство text-align, так для центрирования необходимо задавать в 
+значении center 
+для автоматического левого отступа используется text-align:left*
+
+Для выравнивания строчно-блочных элементов используют также text-align */
+
+
+		         /*    ФЛЕКС элементы
+
+для токо что бы придать свойство flex необходимо элементу изменить свойство
+ display на flex. Сам родитель останется блочным элементом, а потомки станут 
+флекс элементы подобно блочным элементам могут иметь ширину и высоту, 
+margin и padding.
+Однако флекс элементы-потомки выстраются в ряд внутри своего родителя
+Высота: если не задана высота, то будет растягиваться по высоте потомков
+Ширина: если не задана ширина, то будет занимать все доступное место
+inline-flex (родитель будет вести как строчно-блочный элемент)
+    т.е. ширина сформируется шириной потомков
+потомкам можно задавать margin */
+
+
+
+
+
+#parentflex {
+margin-top: 20px;
+display:flex;
+border: 1px solid red;}
+
+#child1 {
+height: 100px;
+width: 200px;
+border: 1px solid green;
+margin: 30px;}
+
+#child2 {
+height: 100px;
+width: 200px;
+border: 1px solid green;
+margin: 30px;
+}
+
+#child3 {
+height: 100px;
+width: 200px;
+border: 1px solid green;
+margin: 30px;
+}
+
+
+
+			/* justify-content: center
+		
+	выравнивание флекс элементов
+justify-content:center
+               :space-between (равномерное распределение по своему родителю,
+				расстояние между ними рассчитывается 
+				автоматически)
+               :space-around (также как и битвин, но первый последний с 
+				отступом от края)
+	       :space-evenly (все промежутки между объектами равны)
+
+
+
+
+			Абсолютное позиционирование
+
+-позволяет задавать расположение по координатам страницы (100рх сверху, 200рх снизу
+Элемент переместится туда невзирая на то, что там есть другие элементы
+
+position:absolute*/
+
+
+
+#img {
+position: absolute;
+top: 200px;
+left: 150px;
+height: 400px;
+width: 400px;
+border: 1px solid green;
+opacity: 0.7;}
+
+
+			/*Относительное позиционирование 
+
+задается с помощью значения relative - позволяет сдвигать относительно
+своего текущего положения на заданную позицию (остальные элементы будут
+считать что элемент не поменял место)
+
+			Относительно родителя
+
+-если элементу задан relative, а его потомку absolute, то потомок будет
+позиционироваться относитлеьно своего родителея, а не относительно своего
+окна браузера
+
+***Также можно центрировать объекты через абсолют 
+#elem {
+position: absolute;
+left: 30px;
+top: 30px;
+bottom: 30px;
+right: 30px;
+}
+
+
+			Фиксированное позиционирование
+
+-разница с абсолютным состоит в прокуртке страницы. Элемент будет
+прокручиваться вместе с ней  
+position: fixed*/
+
+
+
+/*
+#img {
+position: fixed;
+top: 200px;
+left: 150px;
+height: 400px;
+width: 400px;
+border: 1px solid green;}*/
+
+			
+			
+			/*Наложение элементов по оси Z
+
+*по умолчанию если два элемента накладываются друг на друга, то сверху
+ тот, который идет ниже в ХТМЛ коде.
+Порядок наложения можно регулировать в HTML коде свойством
+z-index
+(работает только для элементов которым position задан как 
+absolute, fixed, relative)
+z-index работает по порядку чей индекс больше, тот выше 
+(можно использовать и отрицательные значения)*/
+
+
+
+			/* Введение в свойство Float
+
+свойство float позволяет устанавливать обтекание для изображения
+#img {
+float:right/left;}
+
+для того, чтобы текст не прилегал к картинке используется margin*/
+
+			
+
+
+
+
+
+
+
+
+.P {
+margin-top: 100px;
+width: 500px;
+border: 1px solid red;
+text-align: justify;
+}
+
+.C {
+float: left;/* блоки выстроились, но родитель съехал*/
+width: 200px;
+height: 100px;
+border: 1px solid green;}
+
+#clearfix /* этот див выстраивает рамку родителя правильно*/
+{clear: both;}
+
+
+
+
+				/* FLEX
+			      flex-direction
+
+регулирует то, как выстраиваются блоки
+	flex-direction; row-reverse-выстраивает блоки вправо переворачивая
+ последовательность
+			column-выстраивает элементы в колонну
+			column-reverse - колонка снизу
+
+				Flex ОСИ !
+необходмы для выравнивания по горизонтали и вертикали. 
+Всегда существует главная ось и поперечная. Главная ось имеет 4 направления 
+1 низ-верх
+2 верх-низ
+3 лево-право
+4 право-лево
+Регулируется свойством flex-direction: row - слево направо
+				       row-reverse - справо - налево
+				       column сверху вниз
+				       column-reverse- снизу вверх
+выравнивание  флекс элементов по заданной оси выполняется 
+			justify-content: flex-start начало оси
+					 flex-end  конец оси
+
+для выравнивания флекс элементов по поперечной оси производится с 
+			align-items: flex-start начало оси
+				     flex-end  конец оси
+				     center
+
+
+для выравнивания отдельного флекс элемента (потомку) используют:
+  по поперечной оси     align-self: flex-start начало оси
+				    flex-end  конец оси
+				     center
+
+для изменения порядка элементов (без хтмл)
+			order: 1  (меньший ближе к началу)
+*/
+
+.Pa {
+margin-top: 100px;
+width: 500px;
+height: 300px;
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+align-items: center;
+border: 1px solid red;
+text-align: justify;
+}
+
+
+.Ch {
+float: left;
+width: 50px;
+height: 50px; /* если не задать, то высота будет по содержимому*/
+border: 1px solid green;}
+
+#Ch1 {
+float: left;
+align-self: flex-start;
+order: 1;
+width: 50px;
+height: 50px; 
+border: 1px solid green;}
+
+
+#clearfixed 
+{clear: both;}
+
+#menu {
+width: 300px;
+display: flex;
+flex-direction: column;}
+
+#menu a {
+
+padding: 5px;
+margin-top: 30px;
+margin-right: 10px;
+font: 15px arial bold;
+text-decoration: none;
+color: black;
+background-color: green;
+}
+
+#menu a.active {
+background-color: white;
+}
+
+
+#menu a:hover, #menu a.active {
+width: 50px;
+height: 60px; 
+border: 1px solid blue;}
+
+
+/*					flex-basis
+задает размер элемента вдоль главной оси (если ось горизонтальна то, будет 
+задавать ширину, а если ось вертикальна, то высоту) ОТНОСИТЕЛЬНО НЕПОДВИЖНОЙ ОСИ
+									ЭКРАНА!!!!
+
+.parent {
+display:flex;
+flex-direction: column;  <--  это будет изменять ось и 
+width: 300px
+height: 300px;
+border: 1px solid red;}
+
+.child (x3)
+{flex-basis: 50px;
+border: 1px solid green;}
+
+
+
+					flex-grow
+
+
+свойство заставляющее расти в пропорции от свободного места
+ *если свойство равно 0, то элемент не получит доп. места
+
+.parent {
+display:flex;
+width: 300px
+height: 200px;
+border: 1px solid red;}
+
+.child1 {
+width: 100px;  ----> 125px
+flex-grow: 1;} 
+
+.child2 {
+width: 100px;  ----> 175pxa
+flex-grow: 3;}
+
+					flex-shrink
+
+свойство регулирующее сжатие, чем больше, тем на меньшую часть уменьшится
+(обратно свойству flex-grow)
+
+
+		СВОЙСТВО: flex 
+
+свойство сокращение, сначала идет flex-grow, flex-shrink, flex-basis
+
+
+
+
+
+
+					flex-wrap
+свойство задает правило вывода Флекс элементов.
+
+flex-wrap: nowrap - запрет переноса
+	   wrap - перенос разрешен
+	   wrap-reverse - обратный перенос  
+
+
+/*----------------------------------------------------------------------------------*/
+
+					/*Практики*/
+
+#wrapper{
+width: 500px;
+margin: 50px auto;
+}
+
+#menu_practise {
+display: flex;
+flex-direction: row;
+justify-content: left;
+margin-top: 50px;
+margin-bottom: 20px;
+background-color: #484848;
+}
+
+#menu_practise a {
+
+padding: 15px 25px;
+margin-top: 30px;
+margin-right: 10px;
+font: 15px arial;
+text-decoration: none;
+color: #fff;
+}
+
+#menu_practise a:hover, #menu_practise a.active {
+color: #484848;
+background-color: #fff;}
+
+
+
+
+
+
+
+/* typical structure site*/
+Разметка:
+
+
+
+*{
+box-sizing: border-box;
+}
+
+#typical_wrapper{
+width: 1000px;
+margin: 30px auto;
+border: 1px solid black;
+}
+
+#typical_header{
+height: 100px;
+padding: 30px;
+border: 1px solid black;
+}
+
+#typical_container{
+display: flex;
+}
+
+#typical_content{
+width: 780px;
+height: 700px;
+padding: 20px;
+border: 1px solid black;
+}
+
+
+#typical_sidebar{
+width: 200px;
+margin-right: 20px;
+padding: 20px;
+border: 1px solid black;
+}
+
+#typical_footer{
+height: 200px;
+padding: 20px;
+border: 1px solid black;
+}
+
+
+/* Для элементов макета сайта используют теги 
+
+<header>   </header>
+
+<nav>   </nav> - menu
+
+<aside>   </aside> - sidebar
+
+<main>   </main> - content
+
+<footer>   </footer> */
+
+
+/*----------------------------------------------------------------------------------*/
+
+		          	/*Работа с текстом
+
+
+
+				white-space
+-свойство устанавливает как переносить текст на новую строку, а также как отображать 
+пробелы и переносы
+	white-space: nowrap - запрещает перенос
+		   : pre - 
+		   : pre-line - учитываются энтера, но лишние пробелы убираются
+		   : pre-wrap - оставит текст блокнота, но перенесет на новую строку
+		   : normal - браузер сам расставит разрыв строки, лишних пробелов не будет
+
+
+
+
+
+				overflow
+-свойство указывает как поступать с содержимым (текст, картинки, другие блоки),
+которые вылазят за границы блока. Так, браузер может скрыть
+	overflow: hidden - скрывает что вылезло за блок
+		: scroll - полосы прорутки (вне зависимости необходимости)
+		: auto - скролл при необходимости
+		: visible - не скрывает содержимое
+для горизонтали overflow-x
+для вертикали overflow-y
+
+
+
+
+				text-overflow
+-свойство добавляет троеточие в невлезающий текст
+		text-overflow: ellipsis; - добавляет в уонец резанного текста ...
+			     : clip - отменяет
+
+
+
+
+				word-break
+-свойство позволяет перенести буквы длинного слова на новую строчку, если слово не 
+влазит в ширину контейнера
+ 		word-break: break-all - переносит
+			  : keep-all - переносит иероглифы
+			  : normal - не переносит
+
+				 
+
+				hyphens
+
+-свойство включает переносы слов с "-"
+!!!Для работы необходимо указывать атрибут lang="ru" при HTML верстке
+<p lang="ru">
+			hyphens:auto
+			  	:manual - переност при если установлен тег wbr или 
+						спецсимвол &shy;
+				:none - слова не будут переносится
+
+*/
+
+
+#overflow {
+margin-top: 50px;
+width: 200px;
+height: 40px;
+overflow: auto;
+border: 1px solid red;
+margin-bottom: 20px;}
+
+
+
+
+/*			      Работа с указателями 
+
+				user-select
+
+-свойство управляет ведением выделением текста
+
+		user-select: none - текст не выделяется
+			   : contain - выделение начатое внутри не выйдет за пределы 
+					элемента
+			   : all - двойной клик выделит весь элемент родителя
+		 	   : auto - ???
+			   : text - можно выделить текст в элементе
+
+				
+				pointer-events
+-отменяет работу элемента (можно отключить ссылку) none, auto
+
+a {
+pointer-events: none;
+}
+
+
+				cursor
+- служит для изменения курсора (ооочень много значений) для определенного элемента 
+на странице
+
+
+
+				::selection 
+
+-псевдоклас позволяющий изменять цвет выделения 
+
+#... ::selection {
+color: red;
+background-color: black;}
+
+				user-select
+-свойство управляет поведением выделения текста и других элементов на странице
+		none-текст не выделяется 
+		contain - выделение начатое в элементе не выйдет за пределы
+		all-двойной клик выделит все содержимое элемента
+		auto - для афтер и бефор значение будет none
+			для редактируемого элемента contain
+		text - по умолчанию
+
+
+
+				Работа с таблицами
+
+				    border-spacing
+-свойство задает расстояние между ячейками таблицы (применять свойство для таблицы всей!)
+	
+	border-spacing: (одно или два значения 1-одновременно для горизонтали и вертикли
+				       2 - отдельно для кадой оси
+
+
+
+				    empty-cells
+-указывает как отображать пустые ячейки
+			empty-cellS: show|hide
+
+
+
+				   vertical-align
+
+-устанавливает вертикальное выравнивание текста (аботает только для inline ли inline-block
+
+:bottom - по нижнему краю
+:top - по верхнему
+:middle - по центру (по умолчанию) 
+:sub - нижний индекс
+:super - верхний индекс
+:baseline - по базовой линии 
+:text-bottom - по самому нижнему краю строки
+:text-top - по самому верхнему краю строки
+
+				
+
+					table-layout
+
+-свойство что бы браузер не уменбшал ячейки
+
+:fixed
+:auto (по умолчанию)
+:inherit - наследует значение родителя
+
+
+
+				Вставка псевдоклассов
+
+::after -вставляет текст после элемента (работает только с эл. content)*/
+::before - перед
+=
+		
+
+#content h1:hover::after {
+content: "The BIG BLACK DICK";
+color: red; }
+
+
+/*			attr 
+-свойство позволяющее получать данные атрибутов*/
+
+a::after {
+content: '('attr(href)')';
+}
+
+
+
+/*			calc 
+-свойство позволяющее делать расчеты в css*/
+
+
+/*
+
+#child {
+width: calc(100%-50px);
+}
+
+				
+	
+
+
+
+
+				/*АНИМАЦИИИИИИ
+				
+				Transition - переход к свойству
+
+transition-property - устанавливает свойство которое будет изменяться 
+		плавным переходом transition. Необходимо указывать свойство,
+		которое будет изменяться (если задать all (default), 
+		то будут все свойства)
+
+transition-timing-function-скорость изменения
+			  :ease  - медленно потом быстро потом медленно
+			  :ease-in - динамич ускорение
+			  :ease-out - динамич замедление
+			  :ease-in-out - как первое только быстрее
+			  :linear - равномерно
+			  :step-start - без анимации
+			  :step-end - без анимации с выдержкой в duration
+			  :steps - скачки (число, start/end)
+			  :cubic-bezier - кривая Безье
+tranition-delay - задержка перед анимацией*/
+
+
+
+
+
+#anim {
+border: 2px solid black;
+transition-duration: 3s;
+transition-delay: 1s;
+transition-timing-function: ease-out;
+transition-property: width;
+/*либо transition: width 3s ease-out 2s;*/
+height: 50px;
+width: 100px;
+}
+
+#anim:hover {
+width: 400px;
+}
+
+
+			    /*Animation-name
+animation: - скоращение, порядок не имеет значения
+	  move 6s infinite 3s linear
+animation-name: - свойство задает имя анимации (или анимаций)
+animation-duration: - скорость
+animation-delay: задержка
+animation-timing-function: аналогично с транзишен
+animation-iteration-count: - количество повторов (можно дробно) или бесконечно
+animation-fill-mode: - местоположение после конца анимации
+			backwards в начальное
+			forwards - в том состоянии в котором остановился
+			both
+			none-после задержки перепрыгнет
+animation-direction: - свойства возврата, как транзишен (что бы элемент не 
+	перепрыгивал а по трассеру возвращался)
+			normal
+			reverse - в обратном направлении
+			alternate - сначала в прямом потом в обратном
+			alternate-reverse - альтернэйт с конца
+			normal - скачок обратно (дефолт)
+animation-play-state: paused/running
+ */
+
+
+@keyframes move {
+from {margin-left: 0px;}
+to {margin-left: 300px;}
+}
+
+#buttom {
+border: 3px solid red;
+width: 50px;
+height: 50px;
+margin-top: 30px;
+}
+
+#anim2 {
+margin-top: 30px;
+animation-name: move;
+animation-duration: 3s;
+animation-iteration-count: infinite;
+animation-timing-function: linear;
+border: 3px solid black;
+animation-direction: alternate;
+width: 50px;
+height: 50px;
+animation-play-state: paused;
+}
+
+
+#buttom:hover + #anim2 {
+animation-play-state: running;
+border: 3px solid green;
+}
+
+
+
+
+			      /*transform:rotate
+
+-задает поворот на нужный угол используется с transform (положительное значение по 
+	часовой, отриц против часовой). 
+deg/turn*
+transform:rotate *или по оси Z* 
+	  rotateX - поворот относительно оси Х (отражение)
+	  rotateY
+	  rotateZ
+	  rotate3d (x,y,z, corner) поворт по трем осям
+
+transform:
+	  scaleX - масштабирует по оси Х
+	  scaleY - 
+	  scale -одновременно два (1.2, 2)
+
+transform: skewX - скос по оси Х (30deg)/ (-30deg) + вверх/ - вниз
+	   skewY +влево/вправо
+	   skew
+
+transform: translateX - сдвиг по Х
+transform: translateY
+transform: translate
+Поворот, масштаб, наклон осуществляется вокруг точки transform-origin
+
+transform-origin: - свойство относительного которого происходит трансформация
+		 X left/right/center(defaulf)
+		 Y top/bottom/center(default)
+		 Z - (для 3д трансформаций)
+*/
+
+#buttom {
+transition: transform 3s linear;
+}
+
+
+#buttom:hover {
+transform: rotate(360deg);}
+
+
+
+
+/* 				Единицы размеров
+
+em - размер в процентах от размеров родителя
+ (будет умножаться на em от первоначального родителя 2*2*2* и тд....)
+
+rem - размер относительно тега html, т.е. если HTML=16px то 2rem=32px
+
+vw и vh - задают размер относительно области просмотра окна браузера*/
+
+
+
+
+
+/*				Adoptive layout
+				усыновленная верстка
+
+
+
+				@media
+-медиазапрос (позволяет выполнять различный код в зависимости от ширины экрана
+
+@media (min-width: 300px)  ---> код сработает если ширина экрана от 300 до 1200
+and (max-width: 1200px)
+{code;}
+
+
+Перестроение блоков (пример): */
+
+
+.perestr {
+display: flex; 
+width: 90%;
+margin: 70px auto;}
+
+.per {
+box-sizing: border-box;
+padding: 20px;
+border: 2px solid red;}
+
+
+@media (max-width: 500px) {
+.perestr {flex-direction: column;}
+.per{margin-bottom: 10px;}
+}
+
+
+@media (min-width: 500px) {
+.perestr {justify-content: space-between;}
+.per{width: 49%;}
+}
+
+
+
+			
+					GRID
+
+-двумерная сетка. Дает возможность контроля строк и столбцов
+Основное свойство для родителя display: grid;
+
+*свойство grid автоматически создает сетку ячеек расположенных столбцом
+
+  Основные свойства:
+
+	grid-template-columns: - пределяет количество колонок и может задавать ширину каждой из них. Помимо базовых размерностей (vw, px, %, auto-ужимается под контент) добавляется fr-фракция. Похожа на  единицу гибкости flex-grow
+ функция repeat() - первым параметром принимает количество, а вторым значение.
+  Например grid-template-columns:repeat(3, 1fr 2fr), о получим шесть колонок
+	
+	grid-template-rows: - в принципе анологичен columns
+	
+	grid-auto-rows: -автоматически выставляет высоту строк
+ функция minmax() - первый парам минимальная высота, второй - максимальная
+
+	auto-fill/auto-fit -автозаполнение
+  задача: в ширину экрана надо вместить максимальное количество карточек, у которых есть минимальный размер. При этом карточки должны растягиваться на всю доступную ширину экрана и выстраиваться по сетке.
+	РЕШЕНИЕ: grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)
+*НО, если ширины больше, то создастся еще одна пустая колонка
+ЧТОБЫ этого не было : auto-fit
+
+	grid-lines: -всегда создаются автоматически и делят область на сетку линий. Можно легко размещать отдельные элементы относительно сетки
+ для этого: grid-column-start/grid-column-end
+	    grid-row-start/grid-row-end
+  Например: подставим последний элемент в начало
+	   el6{
+		grid-column-start: 1;
+		grid-column-end: 2;
+		grid-row-start: 1;
+		grid-row-end: 2;
+		}
+
+	el6{
+	 grid-column: 1/2;
+	 grid-row: 1/2;
+	}
+
+	//так как элемент занимает изначально одну колонку:
+
+	el6 {
+	 grid-column: 1;
+	 grid-row: 1;
+	}
+*метод span - позволяет растянуть элемент на нужное количество ячеек
+
+	el6 {
+	 grid-column: 1/span2; //оже самое что grid-column: 1/3
+	 grid-row: 1;
+	}
+
+
+	auto-placement - алгоритм автоматического размещения эл-ов внутри сетки
+(в кратце элементы при изменении позиции отдельных, стараются продолжить последовательное размещение)
+
+
+	grid-area - можно размещать элементы внутри конкретной области
+Как-делается: есть 4ре элемента (el1, el2, el3, el4).
+Дадим им CSS имена:
+
+	#el1{
+	 grid-area:header;}
+
+	#el2{
+	 grid-area:aside;}
+
+	#el3{
+	 grid-area:main;}
+	
+	#el4{
+	 grid-area:footer;}
+
+теперь разделим по областям:
+
+	.container {
+	 display: grid;
+	 grid-template:
+	   "header header" 56px //height
+	   "aside main" auto //height
+	   "footer footer" 100px //height
+	/20vw auto; //ширина колонок
+	gap: 7px;
+	}
+
+
+
+
+

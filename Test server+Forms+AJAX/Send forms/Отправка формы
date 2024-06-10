@@ -1,0 +1,386 @@
+                            Отправка форм в JavaScript
+
+Пусть у нас есть несколько инпутов и кнопка:
+<input>
+<input>
+<input type="submit">
+
+Обернем наши элементы в тег form. В этом случае получится форма, 
+которая по нажатию на кнопку будет отправляться на сервер:
+<form>
+	<input>
+	<input>
+	<input type="submit">
+</form>
+
+Чтобы на сервере можно было получить данные формы, 
+необходимо каждому инпуту дать свое имя:
+<form>
+	<input name="test1">
+	<input name="test2">
+	<input type="submit">
+</form>
+
+В этом случае на сервер данные формы придут в виде пар ключ-значение, 
+где ключами будут имена элементов формы, а значениями - введенные данные.
+
+Для того, чтобы отправить форму, нет необходимости в сервере. 
+Вы можете скопировать приведенный код формы в любой файл, запустить его в 
+браузер и нажать на кнопку отправки - форма отправится и страница браузера 
+перезагрузится.
+
+При отсутствии сервера, однако, данные формы никуда не попадут. 
+
+
+Давайте разместим нашу форму в некотором файле так, чтобы она была
+доступна по адресу http://localhost:3001/form.html:
+<form>
+	<input name="test1">
+	<input name="test2">
+	<input type="submit">
+</form>
+
+Добавим нашей форме атрибут action, указывающий адрес отправки нашей формы:
+<form action="/handler/">
+	<input name="test1">
+	<input name="test2">
+	<input type="submit">
+</form>
+
+Теперь в файле server.js напишем обработчик адреса отправки формы:
+export default {
+	'/handler/': function() {
+		return 'form data received';
+	}
+}
+
+В параметр нашего обработчика попадут отправленные данные формы:
+export default {
+	'/handler/': function(data) {
+		console.log(data); 
+			// выведется в консоль 
+			сервера 
+		return 'form data received';
+	}
+}
+
+
+                            Методы отправки форм в JavaScript
+
+Формы могут быть отправлены двумя способами: методом GET или методом POST. 
+Способ отправки формы регулируется атрибутом method формы.
+
+Например, укажем для формы метод отправки GET:
+<form action="/handler/" 
+	method="GET"> 
+	<input name="test1">
+	<input name="test2">
+	<input type="submit">
+</form>
+
+А теперь метод POST:
+<form action="/handler/" 
+	method="POST"> 
+	<input name="test1">
+	<input name="test2">
+	<input type="submit">
+</form>
+
+Давайте теперь посмотрим, в чем разница между двумя методами отправки.
+ В случае метода GET данные формы будут видны в браузере в виде так называемой строки 
+ параметров (query string), представляющей собой пары вида ключ-значение, где ключом будет
+  имя элемента формы, а значением - введенные в него данные. При этом пары значений будут
+  разделены амперсандами.
+
+Данные, отправленные методом GET, попадут на нашем сервере в свойство get объекта 
+с данными:
+export default {
+	'/handler/': function(data) {
+		console.log(data.get); 
+			// выведется в консоль 
+			сервера 
+		return 'form data received';
+	}
+}
+
+А данные, отправленные методом POST, попадут на нашем сервере 
+в свойство post объекта с данными:
+export default {
+	'/handler/': function(data) {
+		console.log(data.post); 
+			// выведется в консоль 
+			сервера 
+		return 'form data received';
+	}
+}
+
+Для краткости можно выполнить деструктуризацию, чтобы получить наши данные 
+в отдельную переменную:
+export default {
+	'/handler/': function({get, 
+		post}) { 
+		console.log(get);
+		console.log(post);
+		return 'form data received';
+	}
+}
+
+
+                    Отправка форм методом GET в JavaScript
+
+Давайте реализуем отправку формы методом GET на примере.
+ Пусть у нас есть форма, в инпуты которой вводятся числа:
+<form action="/handler/" 
+	method="GET"> 
+	<input name="num1">
+	<input name="num2">
+	<input type="submit">
+</form>
+
+Пусть сервер найдет сумму полученных чисел и отправит результат обратно в браузер.
+   Для начала получим отправленные числа:
+export default {
+	'/handler/': function({get}) {
+		console.log(get.num1);
+		console.log(get.num2);
+		
+		return 'form data received';
+	}
+}
+
+Найдем теперь их сумму и отправим обратно в браузер:
+export default {
+	'/handler/': function({get}) {
+		return Number(get.num1) 
+			+ Number(get.num2); 
+	}
+}
+
+                        Отправка форм методом POST в JavaScript
+
+Давайте теперь научимся отправлять формы методом POST. Для этого атрибут method формы 
+установим в соответствующее значение:
+<form action="/handler/" 
+	method="POST"> 
+	<input name="test1">
+	<input name="test2">
+	<input type="submit">
+</form>
+
+Отличие отправки методом POST в том, что отправленные данные не будут видны
+ в адресной строке браузера. Это удобно, когда данные слишком длинные, либо мы 
+ не хотим показывать их пользователю в адресной строке.
+
+Данные, отправленные методом POST попадут на нашем сервере в свойство post
+ объекта с данными:
+export default {
+	'/handler/': function(data) {
+		console.log(data.post);
+		return 'test';
+	}
+}
+
+Для краткости можно выполнить деструктуризацию, чтобы получить наши данные
+ в отдельную переменную:
+export default {
+	'/handler/': function({post}) {
+		console.log(post);
+		return 'test';
+	}
+}
+
+                                    GET запросы в JavaScript
+
+На самом деле для отправки формы методом GET не обязательно наличие формы.
+ Мы можем просто взять и вручную вбить в адресную строку GET параметры и нажать на Enter.
+ Тем самым мы имитируем отправку формы.
+
+Этим приемом часто пользуются при разработке сайтов. 
+Конечно, не вбивают вручную в адресную строку
+ (хотя это технически возможно для продвинутых пользователей),
+  а создают ссылки, при переходе по которым будет имитироваться отправка формы.
+
+Давайте сделаем подобную ссылку:
+<a href="/handler/?test1=1&test2=2">
+	link</a> 
+
+Поймаем данные из ссылки на сервере:
+export default {
+	'/handler/': function({get}) {
+		console.log(get);
+		return 'text';
+	}
+}
+
+
+
+                                    Кнопки формы в JavaScript
+
+Вы уже знаете, что форма отправляется по нажатию на кнопку.
+Здесь, однако, есть нюансы. Кнопка обязательно должна иметь атрибут type в значении submit:
+<form>
+	<input name="test1">
+	<input name="test2">
+	<input type="submit">
+</form>
+
+Форму также будет отправлять тег button с атрибутом type в значении submit:
+<form>
+	<input name="test1">
+	<input name="test2">
+	<button type="submit">
+		btn</button> 
+</form>
+
+Форму также будет отправлена, если в любом из инпутов поставить фокус и нажать Enter.
+
+Кнопка с атрибутом type в значении button используется как элемент страницы 
+и отправлять форму не будет:
+<form>
+	<input name="test1">
+	<input name="test2">
+	<input type="button">
+</form>
+
+Аналогичным образом будет работать тег button:
+<form>
+	<input name="test1">
+	<input name="test2">
+	<button>btn</button>
+</form>
+
+Кнопка с атрибутом type в значении reset будет очищать заполненную форму:
+<form>
+	<input name="test1">
+	<input name="test2">
+	<input type="reset">
+	<input type="submit">
+</form>
+
+
+
+                                Отправка формы через JavaScript
+
+Можно принудительно отправить форму через JavaScript.
+Давайте посмотрим, как это делается. Пусть у нас есть форма и некоторая кнопка,
+по клику на которую мы хотим отправлять форму:
+<form action="/handler/" 
+	method="POST"> 
+	<input name="test1">
+	<input name="test2">
+</form>
+
+<button>отправить</button>
+
+Получим ссылки на наши элементы в переменные:
+let form   = document.querySelector('form');
+let button = document.querySelector('button');
+
+Повестим на кнопку обработчик клика:
+button.addEventListener('click', 
+	function(event) { 
+	
+});
+
+По клику на кнопку выполним отправку формы через метод submit:
+button.addEventListener('click', 
+	function(event) { 
+	form.submit();
+});
+
+
+                            Запрет отправки формы в JavaScript
+
+При необходимости можно запретить отправку формы. 
+Делается это через уже известный вам preventDefault. Давайте посмотрим на примере.
+
+Пусть у нас есть следующая форма:
+<form action="/handler/" 
+	method="POST"> 
+	<input name="test1">
+	<input name="test2">
+	<input type="submit">
+</form>
+
+Получим ссылку на нее в переменную:
+let form = document.querySelector('form');
+
+Отправку формы можно поймать через событие submit:
+form.addEventListener('submit', 
+	function() { 
+	
+});
+
+Давайте теперь запретим отправку формы:
+form.addEventListener('submit', 
+	function(event) { 
+	event.preventDefault();
+});
+
+
+                                Работа с FormData в JavaScript
+
+Пусть у нас есть некоторая форма:
+<form action="/target/" 
+	method="POST"> 
+	<input name="test1" 
+		value="123"> 
+	<input name="test2" 
+		value="456"> 
+	<input type="submit">
+</form>
+
+Пусть мы хотим получить данные этой формы в виде пар ключ-значение.
+Понятно, что для этого нам придется запустить цикл и в нем сформировать желаемое.
+В JavaScript, однако, существует способ попроще - можно использовать специальный 
+объект FormData, позволяющий в упорядоченном виде получать данные формы.
+
+Давайте разберем работу с этим объектом. Для начала получим ссылку на нашу форму:
+let form = document.querySelector('form');
+
+Теперь создадим объект с нашей формой:
+let formData = new 
+	FormData(form); 
+
+Можно вывести наш объект в консоль, однако при таком выводе данные формы мы не увидим:
+console.log(formData);
+
+Преобразуем наш объект в массив, чтобы увидеть данные формы:
+console.log(Array.from(formData));
+
+
+
+                            Методы FormData в JavaScript
+
+FormData получает данные формы в упорядоченном виде. Это как правило нужно,
+ чтобы отправить эти данные на сервер средствами JavaScript.
+ При этом в FormData есть специальные методы, позволяющие получать и модифицировать 
+ данные формы.
+
+Эти методы такие же, как и в URLSearchParams: get, set, has, append, delete, getAll 
+
+
+                            
+                            
+                            Итераторы в FormData в JavaScript
+
+FormData является итерируемым объектом. Соответственно в него встроены итераторы 
+values, keys, entries.
+
+Давайте переберем циклом значения элементов формы:
+for (let value of 
+	formData.values()) { 
+	console.log(value);
+}
+
+А теперь давайте переберем циклом имена элементов формы:
+for (let key of formData.keys()
+	) { 
+	console.log(key);
+}
+
+А теперь давайте переберем циклом пары ключ-значение элементов формы:
+for (let entry of 
+	formData.entries()) { 
+	console.log(entry);
+}

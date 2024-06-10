@@ -1,0 +1,17 @@
+body {
+    background-color: rgb(87, 204, 142);
+}
+.bold-text {font-weight: bold;}
+*{margin: 100;}
+
+.someShit {
+    margin: 20px;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+background-color:  gray;}
+/* Теперь теги Р стали строчными, а не блочными!!!! */
+.someShit>img
+{width: 300px;
+margin: 20px;}
+/* ТУт мы затронем только изображения, которые размещены в классе контейнер */
